@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body *ngIf="poObs$ | async as po">
+    <h2>Orders for {{ emailInput }}</h2>
+    <button [routerLink]="['/']" style="margin-bottom: 30px">Back</button>
+    <table *ngFor="let order of po" style="margin-bottom: 30px">
+      <tr>
+        <td>Date:</td>
+        <td>{{ order.date }}</td>
+      </tr>
+      <tr>
+        <td>Order Id:</td>
+        <td>{{ order.orderId }}</td>
+        <td><button>Delivered</button></td>
+      </tr>
+      <tr>
+        <td>Total:</td>
+        <td>{{ order.total }}</td>
+      </tr>
+    </table>
+  </body>
+</html>
