@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { EmailResponse, Order, OrderResponse } from "./models";
+import { EmailResponse, OrderResponse } from "./models";
 import { Observable } from "rxjs";
 
-const URL_ORDER = 'http://localhost:8080/api/order'
-const URL_EMAIL = 'http://localhost:8080/api/orders'
+const URL_ORDER = '/api/order'
+const URL_EMAIL = '/api/orders'
+const URL_DELIVERED = '/api/order'
 
 @Injectable()
 export class PizzaService {
@@ -30,7 +31,9 @@ export class PizzaService {
     // TODO: Task 7
     // You may add any parameters and return any type from delivered() method
     // Do not change the method name
-    delivered() {
+    delivered(orderId: string): Observable<any> {
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      return this.http.delete<any>(`${URL_DELIVERED}/${orderId}`, { headers });
     }
   
   }

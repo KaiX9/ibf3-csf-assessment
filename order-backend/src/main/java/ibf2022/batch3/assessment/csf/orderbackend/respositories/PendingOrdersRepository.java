@@ -23,7 +23,7 @@ public class PendingOrdersRepository {
 	// TODO: Task 7
 	// WARNING: Do not change the method's signature.
 	public boolean delete(String orderId) {
-		return false;
+		return this.redisTemplate.delete(orderId);
 	}
 
 }

@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +31,6 @@ import jakarta.json.JsonReader;
 import jakarta.json.JsonValue;
 
 @Controller
-@CrossOrigin(origins="*")
 @RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 public class OrderController {
 
@@ -105,5 +104,19 @@ public class OrderController {
 	}
 
 	// TODO: Task 7 - DELETE /api/order/<orderId>
+	@DeleteMapping(path="/api/order/{orderId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<String> markDelivered(@PathVariable String orderId) {
+		System.out.println(">>orderId: " + orderId);
+		boolean result = this.orderingSvc.markOrderDelivered(orderId);
+		if (result == false) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+				.contentType(MediaType.APPLICATION_JSON)
+				.body("Mark order as delivered is unsuccessful");
+		}
 
+		return ResponseEntity.status(HttpStatus.OK)
+			.contentType(MediaType.APPLICATION_JSON)
+			.body("{}");
+	}
 }

@@ -8,7 +8,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
+
+import com.mongodb.client.result.UpdateResult;
 
 import ibf2022.batch3.assessment.csf.orderbackend.models.PizzaOrder;
 
@@ -52,10 +55,16 @@ public class OrdersRepository {
 	// WARNING: Do not change the method's signature.
 	// Write the native MongoDB query in the comment below
 	//   Native MongoDB query here for markOrderDelivered()
+	// db.orders.updateOne(
+	//  { _id: '8bfebb4224' }, 
+	//  { $set: { delivered: true }})
 	public boolean markOrderDelivered(String orderId) {
-
-		return false;
+		Query q = new Query();
+		q.addCriteria(Criteria.where("_id").is(orderId));
+		Update update = new Update();
+		update.set("delivered", true);
+		UpdateResult result = this.mongoTemplate.updateFirst(q, update, "orders");
+		return result.getModifiedCount() > 0;
 	}
-
 
 }
