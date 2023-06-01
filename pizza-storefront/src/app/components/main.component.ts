@@ -67,8 +67,8 @@ export class MainComponent implements OnInit {
 
   createForm(): FormGroup {
     return this.fb.group({
-      name: this.fb.control<string>('Koh Kai Xiang', [ Validators.required ]),
-      email: this.fb.control<string>('koh_kaixiang_8@hotmail.com', [ Validators.required ]),
+      name: this.fb.control<string>('', [ Validators.required ]),
+      email: this.fb.control<string>('', [ Validators.required ]),
       size: this.fb.control<number>(0, [ Validators.required ]),
       base: this.fb.control<string>('', [ Validators.required ]),
       sauce: this.fb.control<string>('', [ Validators.required ]),
